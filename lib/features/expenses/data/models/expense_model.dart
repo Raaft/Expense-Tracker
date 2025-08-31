@@ -1,42 +1,72 @@
-
+import 'package:json_annotation/json_annotation.dart';
 import '../../domain/entities/expense.dart';
 
-class ExpenseModel extends Expense {
-  const ExpenseModel({
-    int? id,
-    required String category,
-    required double amountOriginal,
-    required String currencyCode,
-    required double amountUsd,
-    required DateTime date,
-    String? receiptPath,
-  }) : super(
-    id: id,
-    category: category,
-    amountOriginal: amountOriginal,
-    currencyCode: currencyCode,
-    amountUsd: amountUsd,
-    date: date,
-    receiptPath: receiptPath,
-  );
+part 'expense_model.g.dart';
 
-  Map<String, Object?> toMap() => {
-    'id': id,
-    'category': category,
-    'amount_original': amountOriginal,
-    'currency_code': currencyCode,
-    'amount_usd': amountUsd,
-    'date_iso': date.toIso8601String(),
-    'receipt_path': receiptPath,
-  };
+@JsonSerializable()
+class ExpenseModel {
+  final int? id;
+  final String category;
+  final double amountOriginal;
+  final String currencyCode;
+  final double amountUsd;
+  @JsonKey(fromJson: _dateFromJson, toJson: _dateToJson)
+  final DateTime date;
+  final String? receiptPath;
+  final String? notes;
+  @JsonKey(fromJson: _dateFromJson, toJson: _dateToJson)
+  final DateTime createdAt;
+  @JsonKey(fromJson: _dateFromJson, toJson: _dateToJson)
+  final DateTime updatedAt;
 
-  factory ExpenseModel.fromMap(Map<String, Object?> m) => ExpenseModel(
-    id: m['id'] as int?,
-    category: m['category'] as String,
-    amountOriginal: (m['amount_original'] as num).toDouble(),
-    currencyCode: m['currency_code'] as String,
-    amountUsd: (m['amount_usd'] as num).toDouble(),
-    date: DateTime.parse(m['date_iso'] as String),
-    receiptPath: m['receipt_path'] as String?,
-  );
+  ExpenseModel({
+    this.id,
+    required this.category,
+    required this.amountOriginal,
+    required this.currencyCode,
+    required this.amountUsd,
+    required this.date,
+    this.receiptPath,
+    this.notes,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+
+  factory ExpenseModel.fromJson(Map<String, dynamic> json) =>
+      _$ExpenseModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ExpenseModelToJson(this);
+
+  factory ExpenseModel.fromEntity(Expense expense) {
+    return ExpenseModel(
+      id: expense.id,
+      category: expense.category,
+      amountOriginal: expense.amountOriginal,
+      currencyCode: expense.currencyCode,
+      amountUsd: expense.amountUsd,
+      date: expense.date,
+      receiptPath: expense.receiptPath,
+      notes: expense.notes,
+      createdAt: expense.createdAt,
+      updatedAt: expense.updatedAt,
+    );
+  }
+
+  Expense toEntity() {
+    return Expense(
+      id: id,
+      category: category,
+      amountOriginal: amountOriginal,
+      currencyCode: currencyCode,
+      amountUsd: amountUsd,
+      date: date,
+      receiptPath: receiptPath,
+      notes: notes,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
+    );
+  }
+
+  static DateTime _dateFromJson(String date) => DateTime.parse(date);
+  static String _dateToJson(DateTime date) => date.toIso8601String();
 }

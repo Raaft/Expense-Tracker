@@ -40,8 +40,6 @@ class ExchangeRateRemoteDataSourceImpl implements ExchangeRateRemoteDataSource {
     } catch (e) {
       // throw Exception('Error fetching exchange rates: $e');
       rethrow;
-
     }
   }
-
 }

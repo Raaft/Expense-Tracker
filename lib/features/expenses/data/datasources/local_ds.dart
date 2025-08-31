@@ -120,23 +120,22 @@ class ExpenseDB {
 
   // helpers
   Map<String, dynamic> _toMap(Expense e) => {
-    'id': e.id,
-    'category': e.category,
-    'amountOriginal': e.amountOriginal,
-    'currencyCode': e.currencyCode,
-    'amountUsd': e.amountUsd,
-    'date': e.date.toIso8601String(),
-    'receiptPath': e.receiptPath,
-  };
+        'id': e.id,
+        'category': e.category,
+        'amountOriginal': e.amountOriginal,
+        'currencyCode': e.currencyCode,
+        'amountUsd': e.amountUsd,
+        'date': e.date.toIso8601String(),
+        'receiptPath': e.receiptPath,
+      };
 
   Expense _fromMap(Map<String, dynamic> m) => Expense(
-    id: m['id'] as int?,
-    category: m['category'] as String? ?? '',
-    amountOriginal: (m['amountOriginal'] as num?)?.toDouble() ?? 0.0,
-    currencyCode: m['currencyCode'] as String? ?? 'USD',
-    amountUsd: (m['amountUsd'] as num?)?.toDouble() ?? 0.0,
-    date: DateTime.tryParse(m['date'] as String? ?? '') ?? DateTime.now(),
-    receiptPath: m['receiptPath'] as String?,
-  );
-
+        id: m['id'] as int?,
+        category: m['category'] as String? ?? '',
+        amountOriginal: (m['amountOriginal'] as num?)?.toDouble() ?? 0.0,
+        currencyCode: m['currencyCode'] as String? ?? 'USD',
+        amountUsd: (m['amountUsd'] as num?)?.toDouble() ?? 0.0,
+        date: DateTime.tryParse(m['date'] as String? ?? '') ?? DateTime.now(),
+        receiptPath: m['receiptPath'] as String?,
+      );
 }
