@@ -1,27 +1,47 @@
-# flutter_init_project
 
-A new Flutter project to start new projects with some code initialization
+---
 
-## Getting Started
-This project is a starting point for a Flutter application.
-A few resources to get you started if this is your first Flutter project:
+## 🔀 State Management
+- Used **flutter_bloc** exclusively (Bloc not Cubit).
+- **ListExpensesBloc** → handles loading, pagination, filtering.
+- **AddExpenseBloc** → handles adding new expenses & currency conversion.
+- UI reacts via `BlocBuilder` and `BlocListener`.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+---
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 🌐 API Integration
+- Currency conversion using free APIs:
+    - [Exchangerate.host](https://exchangerate.host)
+    - [Open ER API](https://open.er-api.com/v6/latest/USD)
+- When adding an expense:
+    1. Store in original currency.
+    2. Fetch conversion rate.
+    3. Save converted amount in **USD**.
 
+---
 
-## Generating assets / fonts 
+## 📑 Pagination
+- Implemented in **ListExpensesBloc**.
+- Uses **page size = 10**.
+- Events:
+    - `LoadFirstPage` resets pagination with optional filters.
+    - `LoadNextPage` loads and appends next batch.
+
+---
+
+## 🗄️ Local Storage
+- Implemented with **Sqflite** for persistence.
+- App supports offline-first behavior.
+
+---
+
+## 🧪 Testing
+- Unit tests included with:
+    - `flutter_test`
+    - `bloc_test`
+    - `mocktail`
+- Coverage supported.
+
+### Run Tests
 ```bash
-flutter pub run build_runner build --delete-conflicting-outputs
-```
-
-## Generating language keys
-```bash
-flutter pub run easy_localization:generate -S assets/languages -f keys -o locale_keys.g.dart      
-```
-
-
+flutter test
